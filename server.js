@@ -1,7 +1,7 @@
-require('dotenv').config()
-
-const express = require('express')
-const mongoose = require('mongoose')
+import 'dotenv/config.js'
+import { router as animesRouter } from './routes/animes.js'
+import express from 'express'
+import mongoose from 'mongoose'
 
 // Express App
 const app = express()
@@ -13,6 +13,8 @@ app.use((req, res, next) => {
     console.log(req.path, req.method)
     next()
 })
+
+app.use('/api/animes', animesRouter)
 
 // Connect to MongoDB
 mongoose.connect(process.env.DATABASE)
