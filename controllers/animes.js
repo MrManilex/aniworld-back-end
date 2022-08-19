@@ -14,6 +14,8 @@ function search(req, res) {
                     }
                 media (id: $id, search: $search) {
                     id
+                    popularity
+                    description
                     title {
                         english
                         romaji
@@ -37,12 +39,13 @@ function search(req, res) {
                 perPage: 10
             }
         })
-    }).then(response => {
-        return response.json()
+    }).then(res => {
+        return res.json()
     }).then(data => {
-        console.log(data.data.Page.media)
+        return data.data.Page.media
+    }).then(anime => {
+        return res.json(anime)
     })
-
 }
 
 export {
