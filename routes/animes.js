@@ -3,6 +3,6 @@ import * as animeController from '../controllers/animes.js'
 
 const router = Router()
 
-router.get('/', animeController.search)
+router.post('/', animeController.search)
 
 export { router }

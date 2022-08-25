@@ -2,6 +2,7 @@ import { Anime } from '../models/anime.js'
 import fetch from "node-fetch"
 
 function search(req, res) {
+    console.log(req.body)
     const query = `
             query ($id: Int, $page: Int, $perPage: Int, $search: String) {
                 Page (page: $page, perPage: $perPage) {
@@ -34,7 +35,7 @@ function search(req, res) {
         body: JSON.stringify({
             query,
             variables: {
-                search: "Demon Slayer",
+                search: req.body.search,
                 page: 1,
                 perPage: 10
             }
