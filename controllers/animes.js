@@ -1,8 +1,7 @@
-import { Anime } from '../models/anime.js'
+// import { Anime } from '../models/anime.js'
 import fetch from "node-fetch"
 
 function search(req, res) {
-    console.log(req.body)
     const query = `
             query ($id: Int, $page: Int, $perPage: Int, $search: String) {
                 Page (page: $page, perPage: $perPage) {
@@ -13,7 +12,7 @@ function search(req, res) {
                         hasNextPage
                         perPage
                     }
-                media (id: $id, search: $search) {
+                media (id: $id, search: $search, isAdult: false) {
                     id
                     popularity
                     description
@@ -22,6 +21,13 @@ function search(req, res) {
                         romaji
                         native
                     }
+                    coverImage {
+                        extraLarge
+                        large
+                        medium
+                        color
+                    }
+                    bannerImage
                 }
             }
         }
