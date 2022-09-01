@@ -1,8 +1,8 @@
 import { User } from "../models/user.js"
-import { Jwt } from "jsonwebtoken"
+import jwt from 'jsonwebtoken'
 
 const createToken = (_id) => {
-    return Jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
+    return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
 }
 
 const loginUser = async (req, res) => {
