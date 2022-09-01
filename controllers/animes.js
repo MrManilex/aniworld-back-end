@@ -14,12 +14,16 @@ function search(req, res) {
                     }
                 media (id: $id, search: $search, isAdult: false) {
                     id
-                    popularity
-                    description
                     title {
                         english
                         romaji
                         native
+                    }
+                    popularity
+                    description
+                    trailer {
+                        site
+                        id
                     }
                     coverImage {
                         extraLarge
