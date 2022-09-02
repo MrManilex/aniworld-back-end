@@ -3,7 +3,7 @@ import fetch from "node-fetch"
 
 function search(req, res) {
     const query = `
-            query ($id: Int, $page: Int, $perPage: Int, $search: String) {
+            query ($page: Int, $perPage: Int, $search: String) {
                 Page (page: $page, perPage: $perPage) {
                     pageInfo {
                         total
@@ -12,7 +12,7 @@ function search(req, res) {
                         hasNextPage
                         perPage
                     }
-                media (id: $id, search: $search, isAdult: false) {
+                media (type: ANIME, search: $search, isAdult: false) {
                     id
                     title {
                         english
@@ -21,14 +21,24 @@ function search(req, res) {
                     }
                     popularity
                     description
+                    episodes
+                    status
+                    startDate{
+                        year
+                        month
+                        day
+                    }
+                    endDate{
+                        year
+                        month
+                        day
+                    }
                     trailer {
                         site
                         id
                     }
                     coverImage {
-                        extraLarge
                         large
-                        medium
                         color
                     }
                     bannerImage
@@ -47,7 +57,7 @@ function search(req, res) {
             variables: {
                 search: req.body.search,
                 page: 1,
-                perPage: 10
+                perPage: 20
             }
         })
     }).then(res => {
