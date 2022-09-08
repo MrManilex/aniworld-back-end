@@ -18,6 +18,7 @@ function search(req, res) {
                         english
                         romaji
                         native
+                        userPreferred
                     }
                     popularity
                     description
@@ -86,6 +87,7 @@ function searchTrending(req, res) {
                         english
                         romaji
                         native
+                        userPreferred
                     }
                     popularity
                     description
