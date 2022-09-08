@@ -81,7 +81,7 @@ function searchTrending(req, res) {
                     hasNextPage
                     perPage
                 }
-                media(sort: TRENDING_DESC){
+                media(type: ANIME, sort: TRENDING_DESC){
                     id
                     title {
                         english
