@@ -1,6 +1,7 @@
 import 'dotenv/config.js'
 import { router as animesRouter } from './routes/animes.js'
 import { router as usersRouter } from './routes/users.js'
+import { router as profileRouter } from './routes/profile.js'
 import express from 'express'
 import mongoose from 'mongoose'
 
@@ -17,6 +18,7 @@ app.use((req, res, next) => {
 
 app.use('/api/animes', animesRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/profile', profileRouter)
 
 // Connect to MongoDB
 mongoose.connect(process.env.DATABASE)
