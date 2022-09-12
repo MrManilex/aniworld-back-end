@@ -12,10 +12,14 @@ const loginUser = async (req, res) => {
     try {
         const user = await User.login(email, password)
 
-        // create a token
-        const token = createToken(user._id)
+        Profile.findById(user.profile._id)
+            .then(userProfile => {
+                // create a token
+                const token = createToken(user._id)
+                const profile = userProfile
+                res.status(200).json({ email, token, profile })
+            })
 
-        res.status(200).json({ email, token })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -25,13 +29,14 @@ const signupUser = async (req, res) => {
     const { email, password, username } = req.body
     try {
         const profile = new Profile({ username })
+        await profile.save()
+
         const user = await User.signup(email, password, profile._id)
-        await profile.save();
-        console.log(profile, user)
+
         // create a token
         const token = createToken(user._id)
 
-        res.status(200).json({ email, token })
+        res.status(200).json({ email, token, profile })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
