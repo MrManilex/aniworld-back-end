@@ -1,7 +1,11 @@
-// import { Profile } from '../models/profile.js'
+import { Profile } from '../models/profile.js'
 
 function getProfile(req, res) {
-    return console.log(req.body)
+    Profile.findById(req.params.id)
+        .then(profile => {
+            res.json(profile)
+        })
+
 }
 
 export {
