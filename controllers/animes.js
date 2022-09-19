@@ -139,19 +139,16 @@ function searchTrending(req, res) {
 }
 function searchUpcoming(req, res) {
     const query = `
-        
-
-
-query ($page: Int, $perPage: Int) {
-	Page (page: $page, perPage: $perPage) {
-        pageInfo {
-            total
-            currentPage
-            lastPage
-            hasNextPage
-            perPage
-        }
-        media(seasonYear: 22, season:FALL, sort: POPULARITY_DESC){
+        query ($page: Int, $perPage: Int) {
+            Page (page: $page, perPage: $perPage) {
+                pageInfo {
+                    total
+                    currentPage
+                    lastPage
+                    hasNextPage
+                    perPage
+                }
+                media(seasonYear: 22, season:FALL, sort: POPULARITY_DESC){
                     id
                     title {
                         english
