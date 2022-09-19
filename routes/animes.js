@@ -6,6 +6,7 @@ const router = Router()
 router.post('/', animeController.search)
 router.post('/trending', animeController.searchTrending)
 router.post('/upcoming', animeController.searchUpcoming)
+router.post('/atpopular', animeController.searchATPopular)
 
 
 export { router }
