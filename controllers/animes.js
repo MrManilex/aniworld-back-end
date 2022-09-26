@@ -1,4 +1,6 @@
-// import { Anime } from '../models/anime.js'
+import { Anime } from '../models/anime.js'
+import { Profile } from '../models/profile.js'
+import { User } from '../models/user.js'
 import fetch from "node-fetch"
 
 function search(req, res) {
@@ -137,6 +139,7 @@ function searchTrending(req, res) {
         return res.json(anime)
     })
 }
+
 function searchUpcoming(req, res) {
     const query = `
         query ($page: Int, $perPage: Int) {
@@ -204,6 +207,7 @@ function searchUpcoming(req, res) {
         return res.json(anime)
     })
 }
+
 function searchATPopular(req, res) {
     const query = `
         query ($page: Int, $perPage: Int) {
@@ -272,9 +276,39 @@ function searchATPopular(req, res) {
     })
 }
 
+function addToWatching(req, res) {
+    Anime.findOne({ animeId: req.params.id })
+        // find user profile
+        .then(anime => {
+            User.findById(req.user)
+                .then(user => {
+                    Profile.findById(user.profile)
+                        .then(profile => {
+                            if (anime) {
+                                console.log(profile, anime)
+                                //find anime
+                                anime.currentlyWatching.push(user.profile)
+                                anime.save()
+                                res.json(anime)
+                                //populated addToWatching using user's _id from mongo
+                            } else {
+                                // find one anime
+                                Anime.create(req.body)
+                                    .then(anime => {
+                                        anime.currentlyWatching.push(user.profile)
+                                        anime.save()
+                                        res.json(anime)
+                                    })
+                            }
+                        })
+                })
+        })
+}
+
 export {
     search,
     searchTrending,
     searchUpcoming,
-    searchATPopular
+    searchATPopular,
+    addToWatching
 }
