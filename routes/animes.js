@@ -9,6 +9,7 @@ router.post('/', animeController.search)
 router.post('/trending', animeController.searchTrending)
 router.post('/upcoming', animeController.searchUpcoming)
 router.post('/atpopular', animeController.searchATPopular)
+router.get('/:id', animeController.getAnime)
 
 // collecting routes
 router.use(decodeUserFromToken)

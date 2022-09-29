@@ -305,10 +305,64 @@ function addToWatching(req, res) {
         })
 }
 
+function getAnime(req, res) {
+    const query = `
+        query($id: Int) {
+            Media(id: $id) {
+                title {
+                    english
+                    romaji
+                    native
+                    userPreferred
+                }
+                popularity
+                description
+                episodes
+                status
+                startDate {
+                    year
+                    month
+                    day
+                }
+                endDate {
+                    year
+                    month
+                    day
+                }
+                trailer {
+                    site
+                    id
+                }
+                coverImage {
+                    large
+                    color
+                }
+                bannerImage
+            }
+        }
+    `
+    fetch('https://graphql.anilist.co/', {
+        method: 'POST',
+        headers: {
+            "Content-Type": 'application/json',
+            "Accept": 'application/json',
+        },
+        body: JSON.stringify({
+            query,
+            variables: {
+                id: parseInt(req.params.id)
+            }
+        })
+    }).then(res => res.json())
+        .then(anime => res.json(anime.data.Media))
+        .catch(error => console.log(error))
+}
+
 export {
     search,
     searchTrending,
     searchUpcoming,
     searchATPopular,
-    addToWatching
+    addToWatching,
+    getAnime
 }
