@@ -5,9 +5,13 @@ function getProfile(req, res) {
         .then(profile => {
             res.json(profile)
         })
+}
 
+function getWatching(req, res) {
+    console.log(req.user)
 }
 
 export {
-    getProfile
+    getProfile,
+    getWatching
 }
