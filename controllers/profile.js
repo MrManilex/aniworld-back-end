@@ -9,8 +9,6 @@ function getProfile(req, res) {
 }
 
 function getWatching(req, res) {
-    // console.log(req.params)
-    // console.log(req.user)
     Anime.find({ currentlyWatching: req.params.id })
     .then(animes => {
         res.json(animes)
