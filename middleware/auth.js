@@ -1,29 +1,29 @@
 import jwt from 'jsonwebtoken'
+import { User } from '../models/user.js'
 
-const SECRET = process.env.SECRET
+const requireAuth = async (req, res, next) => {
 
-const decodeUserFromToken = (req, res, next) => {
-    let token = req.get('Authorization') || req.query.token || req.body.token
-    if (token) {
-        token = token.replace('Bearer ', '')
-        jwt.verify(token, SECRET, (err, decoded) => {
-            if (err) {
-                next(err)
-            } else {
-                req.user = decoded._id
-                next()
-            }
-        })
-    } else {
+    // verify authentication
+    const { authorization } = req.headers
+
+    if (!authorization) {
+        return res.status(401).json({error: 'Authorization token required'})
+    }
+
+    const token = authorization.split(' ')[1]
+
+    try {
+        const {_id} = jwt.verify(token, process.env.SECRET)
+
+        req.user = await User.findOne({ _id }).select('_id')
         next()
+
+    } catch (error) {
+        console.log(error)
+        res.status(401).json({error: 'Request is not authorized'})
     }
 }
 
-function checkAuth(req, res, next) {
-    return req.user ? next() : res.status(401).json({ msg: 'Not Authorized' })
-}
-
 export {
-    decodeUserFromToken,
-    checkAuth
+    requireAuth
 }

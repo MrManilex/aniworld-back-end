@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import * as profilesCtrl from '../controllers/profile.js'
-import { checkAuth, decodeUserFromToken } from "../middleware/auth.js"
+import { requireAuth } from "../middleware/auth.js"
 
 const router = Router()
 
@@ -8,9 +8,9 @@ const router = Router()
 router.get('/:id', profilesCtrl.getProfile)
 
 // Decode User
-router.use(decodeUserFromToken)
+router.use(requireAuth)
 // Get Animes Watching
-router.get('/:id/currently-watching', checkAuth, profilesCtrl.getWatching)
+router.get('/:id/currently-watching', profilesCtrl.getWatching)
 // Get Manga Reading
 
 export {
