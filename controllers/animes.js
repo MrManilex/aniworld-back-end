@@ -285,11 +285,10 @@ function addToWatching(req, res) {
                     Profile.findById(user.profile)
                         .then(profile => {
                             if (anime) {
-                                console.log(profile, anime)
                                 //find anime
                                 anime.currentlyWatching.push(user.profile)
                                 anime.save()
-                                res.json(anime)
+                                return res.json(anime)
                                 //populated addToWatching using user's _id from mongo
                             } else {
                                 // find one anime
@@ -309,6 +308,7 @@ function getAnime(req, res) {
     const query = `
         query($id: Int) {
             Media(id: $id) {
+                id
                 title {
                     english
                     romaji
